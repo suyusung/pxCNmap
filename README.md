@@ -10,4 +10,4 @@ Since this is a standalone script, you don't need to install it from CRAN. Simpl
 
 ```r
 # Source the script directly
-source("tile_map_cn.R")
+source("tile_map_cn_base.R")
