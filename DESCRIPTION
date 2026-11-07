@@ -1,0 +1,26 @@
+Package: pxCNmap
+Type: Package
+Title: Pixel-Art Tile-Grid Maps of China's Province-Level Units
+Version: 0.1.0
+Authors@R: person("Yu-Sung", "Su", role = c("aut", "cre"),
+                  email = "suyusung@tsinghua.edu.cn",
+                  comment = c(ORCID = "0000-0001-5021-8209"))
+Description: Draws schematic "tile-grid" (block) maps of China's 34
+    province-level administrative units using only base R graphics.  Each
+    unit is drawn as a rounded square on a regular grid and positioned so
+    that the overall arrangement preserves geographic relationships, which
+    makes the maps readable when values are labelled directly on the tiles
+    rather than encoded by area.  Tile fill, outline, corner rounding, label
+    text, label colour and an optional numeric annotation under each label
+    are all configurable, and the result can be written straight to a PNG
+    file.
+License: GPL (>= 3) + file LICENSE
+Encoding: UTF-8
+Depends: R (>= 3.5.0)
+Imports: graphics, grDevices
+Suggests: testthat (>= 3.0.0)
+Config/testthat/edition: 3
+URL: https://github.com/suyusung/pxCNmap
+BugReports: https://github.com/suyusung/pxCNmap/issues
+NeedsCompilation: no
+Config/roxygen2/version: 8.1.1

@@ -1,0 +1,4 @@
+^attic$
+^data-raw$
+^\.gitignore$
+^\.github$
