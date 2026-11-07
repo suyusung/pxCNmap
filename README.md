@@ -58,12 +58,30 @@ tile_map_cn(fills, name_type = "full", label_colors = "black",
             label_size = 4, corner_radius = 0, border_color = "grey20")
 ```
 
+### English labels
+
+For a figure that should not depend on a CJK font — a journal that does not
+render the characters, or a machine without one installed — use
+`name_type = "en"`. The labels are then the ISO 3166-2:CN two-letter codes
+(`CN_TILE_EN`: `BJ`, `TJ`, `HE`, ...), and the 南海诸岛 inset is labelled
+`"SCS"`:
+
+```r
+tile_map_cn(fills, name_type = "en", label_colors = "black",
+            border_color = "grey20")
+
+## the codes and the layout line up
+data.frame(code = CN_TILE_EN, full = cn_tiles()$full[1:34])
+```
+
+![The same map with English ISO codes instead of Chinese characters](man/figures/README-english.png)
+
 ### Useful arguments
 
 | argument | purpose |
 |---|---|
 | `colors` | 34 fills, unnamed in `CN_TILE_ORDER` or named by province |
-| `labels`, `name_type`, `label_size`, `label_colors` | the province names |
+| `labels`, `name_type`, `label_size`, `label_colors` | the province names; `name_type` is `"short"` (京), `"full"` (北京市) or `"en"` (`BJ`) |
 | `numbers`, `number_size`, `number_colors` | values printed under the names |
 | `name_position` | `"top"` (leaves room for numbers) or `"auto"` |
 | `border_color`, `border_size` | tile outlines (`NA` = none) |

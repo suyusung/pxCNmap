@@ -19,5 +19,5 @@ length(CN_TILE_ORDER)
 
 }
 \seealso{
-[cn_tiles()], [tile_map_cn()]
+[CN_TILE_EN], [cn_tiles()], [tile_map_cn()]
 }

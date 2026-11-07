@@ -34,6 +34,13 @@ tile_map_cn(colors34, numbers = vals, number_size = 11,
             file = "china_tile_map_numbers.png",
             width = 6.6, height = 6.6, res = 300)
 
+## English labels (ISO 3166-2:CN), for a version of the figure that does not
+## depend on a CJK font being available
+tile_map_cn(colors34, name_type = "en", label_colors = "white",
+            border_color = NA,
+            file = "china_tile_map_en.png",
+            width = 6.6, height = 6.6, res = 300)
+
 ## to a vector PDF instead of a PNG (no `file=`, use your own device):
 ##   pdf("fig.pdf", width = 6.6, height = 6.6); tile_map_cn(colors34); dev.off()
 ##   Cairo::CairoPDF(...) or pdf(..., family = "GB1") for CJK on Linux

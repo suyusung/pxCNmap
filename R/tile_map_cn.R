@@ -15,7 +15,9 @@
 #'
 #' The function draws onto the current graphics device.  Passing `file` opens a
 #' PNG device, draws, and closes it, which is the usual way to produce a
-#' figure for a manuscript.
+#' figure for a manuscript.  Labels default to the Chinese abbreviations; use
+#' `name_type = "en"` for ISO 3166-2:CN English abbreviations when the figure
+#' should not depend on a CJK font.
 #'
 #' @param colors Fill colours for the 34 province-level units.  Either an
 #'   unnamed vector of exactly 34 values, consumed in [CN_TILE_ORDER], or a
@@ -49,8 +51,11 @@
 #' @param border_size Outline width in points (graphics `lwd`).
 #' @param corner_radius Corner radius as a fraction of the tile side; `0` gives
 #'   plain squares.  Clipped to half the tile side.
-#' @param name_type `"short"` for the conventional abbreviations (京) or
-#'   `"full"` for the administrative names (北京市).
+#' @param name_type Which label to draw: `"short"` for the conventional
+#'   abbreviations (京), `"full"` for the administrative names (北京市), or
+#'   `"en"` for the ISO 3166-2:CN English abbreviations (BJ) in [CN_TILE_EN].
+#'   `"en"` gives a figure whose labels do not depend on a CJK font; the
+#'   南海诸岛 inset is labelled `"SCS"`.
 #' @param nz_color Fill colour of the 南海诸岛 inset tile.
 #' @param tile_size Side of one tile in grid units.  The default of 1 leaves a
 #'   small gap between neighbours; scaling it does not rescale the labels.
@@ -93,6 +98,11 @@
 #' tile_map_cn(fills, name_type = "full", label_colors = "black",
 #'             label_size = 4, corner_radius = 0, border_color = "grey20")
 #'
+#' ## English abbreviations, for a figure that must not depend on a CJK font
+#' tile_map_cn(fills, name_type = "en", label_colors = "black")
+#'
+#' @seealso [cn_tiles()], [CN_TILE_ORDER], [CN_TILE_EN]
+#'
 #' @export
 tile_map_cn <- function(colors,
                         labels        = TRUE,       # draw the province names?
@@ -106,7 +116,7 @@ tile_map_cn <- function(colors,
                         border_color  = NA,         # NA = no border
                         border_size   = 0.5,        # lwd
                         corner_radius = 0.153,      # fraction of the tile side
-                        name_type     = c("short", "full"),
+                        name_type     = c("short", "full", "en"),
                         nz_color      = "grey45",
                         tile_size     = 1,
                         family        = "",         # e.g. "WenQuanYi Zen Hei"

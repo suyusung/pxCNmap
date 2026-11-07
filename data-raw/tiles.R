@@ -20,11 +20,21 @@ CN_TILE_ORDER <- c("京", "津", "冀", "晋", "蒙", "辽", "吉", "黑", "沪"
                    "桂", "琼", "港", "澳", "渝", "川", "贵", "滇", "藏", "陕",
                    "甘", "青", "宁", "新")
 
+## English abbreviations, same order.  These are the ISO 3166-2:CN
+## subdivision codes, the conventional two-letter labels used in
+## English-language maps and tables.  The 南海诸岛 inset is "SCS" (South
+## China Sea), which has no ISO code of its own.
+CN_TILE_EN <- c("BJ", "TJ", "HE", "SX", "NM", "LN", "JL", "HL", "SH", "JS",
+                "ZJ", "AH", "FJ", "JX", "SD", "TW", "HA", "HB", "HN", "GD",
+                "GX", "HI", "HK", "MO", "CQ", "SC", "GZ", "YN", "XZ", "SN",
+                "GS", "QH", "NX", "XJ")
+
 ## grid position of each unit; the layout is a minimum-displacement solution
 ## on a 480 km Albers grid (mean error 268 km, max 549 km, against the true
 ## provincial centroids)
 cn_tile_table <- data.frame(
   short = CN_TILE_ORDER,
+  en    = CN_TILE_EN,
   full  = c("北京市", "天津市", "河北省", "山西省", "内蒙古自治区",
             "辽宁省", "吉林省", "黑龙江省", "上海市", "江苏省",
             "浙江省", "安徽省", "福建省", "江西省", "山东省", "台湾省",
@@ -45,12 +55,17 @@ cn_tile_table <- data.frame(
 ## 南海诸岛: grey inset, never counted as a province
 cn_tile_table <- rbind(
   cn_tile_table,
-  data.frame(short = "南海诸岛", full = "南海诸岛", row = 8, col = 7,
-             inset = TRUE, stringsAsFactors = FALSE))
+  data.frame(short = "南海诸岛", en = "SCS", full = "南海诸岛",
+             row = 8, col = 7, inset = TRUE, stringsAsFactors = FALSE))
 
 stopifnot(nrow(cn_tile_table) == 35L,
           sum(!cn_tile_table$inset) == 34L,
-          !anyDuplicated(cn_tile_table$short))
+          !anyDuplicated(cn_tile_table$short),
+          !anyDuplicated(cn_tile_table$en),
+          all(nchar(cn_tile_table$en[!cn_tile_table$inset]) == 2L),
+          identical(cn_tile_table$en[35], "SCS"))
 
-save(CN_TILE_ORDER, cn_tile_table, file = "R/sysdata.rda", version = 2)
-cat("wrote R/sysdata.rda:", nrow(cn_tile_table), "rows\n")
+save(CN_TILE_ORDER, CN_TILE_EN, cn_tile_table,
+     file = "R/sysdata.rda", version = 2)
+cat("wrote R/sysdata.rda:", nrow(cn_tile_table), "rows,",
+    length(unique(cn_tile_table$en)), "distinct English codes\n")

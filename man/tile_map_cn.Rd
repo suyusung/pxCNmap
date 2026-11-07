@@ -17,7 +17,7 @@ tile_map_cn(
   border_color = NA,
   border_size = 0.5,
   corner_radius = 0.153,
-  name_type = c("short", "full"),
+  name_type = c("short", "full", "en"),
   nz_color = "grey45",
   tile_size = 1,
   family = "",
@@ -74,8 +74,11 @@ no outline, which lets the tiles read as one continuous surface.}
 \item{corner_radius}{Corner radius as a fraction of the tile side; `0` gives
 plain squares.  Clipped to half the tile side.}
 
-\item{name_type}{`"short"` for the conventional abbreviations (京) or
-`"full"` for the administrative names (北京市).}
+\item{name_type}{Which label to draw: `"short"` for the conventional
+abbreviations (京), `"full"` for the administrative names (北京市), or
+`"en"` for the ISO 3166-2:CN English abbreviations (BJ) in [CN_TILE_EN].
+`"en"` gives a figure whose labels do not depend on a CJK font; the
+南海诸岛 inset is labelled `"SCS"`.}
 
 \item{nz_color}{Fill colour of the 南海诸岛 inset tile.}
 
@@ -114,7 +117,9 @@ counted as one of the 34 units.
 \details{
 The function draws onto the current graphics device.  Passing `file` opens a
 PNG device, draws, and closes it, which is the usual way to produce a
-figure for a manuscript.
+figure for a manuscript.  Labels default to the Chinese abbreviations; use
+`name_type = "en"` for ISO 3166-2:CN English abbreviations when the figure
+should not depend on a CJK font.
 }
 \examples{
 ## 34 fills in CN_TILE_ORDER -- here, one colour per broad region
@@ -137,7 +142,12 @@ tile_map_cn(fills, numbers = round(seq(3, 28, length.out = 34), 1))
 tile_map_cn(fills, name_type = "full", label_colors = "black",
             label_size = 4, corner_radius = 0, border_color = "grey20")
 
+## English abbreviations, for a figure that must not depend on a CJK font
+tile_map_cn(fills, name_type = "en", label_colors = "black")
+
 }
 \seealso{
 [cn_tiles()], [CN_TILE_ORDER]
+
+[cn_tiles()], [CN_TILE_ORDER], [CN_TILE_EN]
 }

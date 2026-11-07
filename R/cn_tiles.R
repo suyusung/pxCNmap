@@ -10,6 +10,7 @@
 ##
 ## The layout table has one row per tile:
 ##   short  conventional one-character abbreviation (CN_TILE_ORDER)
+##   en     ISO 3166-2:CN English abbreviation (CN_TILE_EN)
 ##   full   full administrative name
 ##   row    grid row, row 1 at the top
 ##   col    grid column
@@ -25,7 +26,7 @@
 #' @format A character vector of length 34, holding the conventional
 #'   one-character abbreviations (京, 津, 冀, ...) in row-major tile order.
 #'
-#' @seealso [cn_tiles()], [tile_map_cn()]
+#' @seealso [CN_TILE_EN], [cn_tiles()], [tile_map_cn()]
 #'
 #' @examples
 #' CN_TILE_ORDER
@@ -35,15 +36,41 @@
 #' @export
 NULL
 
+#' Province English abbreviations in tile order
+#'
+#' The ISO 3166-2:CN subdivision codes for the 34 province-level units, in the
+#' same order as [CN_TILE_ORDER].  These are the labels drawn by
+#' `tile_map_cn(name_type = "en")`, for figures that should not depend on a
+#' CJK font.
+#'
+#' @format A character vector of length 34 of two-letter codes: `"BJ"`,
+#'   `"TJ"`, `"HE"`, ...
+#'
+#' @seealso [CN_TILE_ORDER], [cn_tiles()], [tile_map_cn()]
+#'
+#' @examples
+#' CN_TILE_EN
+#'
+#' ## the codes travel with the layout
+#' data.frame(code = CN_TILE_EN, full = cn_tiles()$full[1:34])[1:5, ]
+#'
+#' @name CN_TILE_EN
+#' @export
+NULL
+
 #' Tile positions for China's province-level units
 #'
 #' Returns the grid layout behind [tile_map_cn()]: one row per tile, giving
-#' the conventional short name, the full administrative name, the grid row and
-#' column, and whether the row is the 南海诸岛 inset rather than a province.
+#' the conventional short name, the English abbreviation, the full
+#' administrative name, the grid row and column, and whether the row is the
+#' 南海诸岛 inset rather than a province.
 #'
 #' @return A data frame with 35 rows and the columns
 #'   \describe{
-#'     \item{`short`}{the conventional one-character abbreviation (京).}
+#'     \item{`short`}{the conventional one-character abbreviation (京), as in
+#'       [CN_TILE_ORDER].}
+#'     \item{`en`}{the ISO 3166-2:CN English abbreviation (BJ), as in
+#'       [CN_TILE_EN].}
 #'     \item{`full`}{the full administrative name (北京市).}
 #'     \item{`row`, `col`}{integer position on the tile grid, row 1 at the top.}
 #'     \item{`inset`}{`TRUE` for the 南海诸岛 tile, which is drawn in grey and
@@ -51,7 +78,7 @@ NULL
 #'   }
 #'   The first 34 rows are in [CN_TILE_ORDER]; the inset is the last row.
 #'
-#' @seealso [CN_TILE_ORDER], [tile_map_cn()]
+#' @seealso [CN_TILE_ORDER], [CN_TILE_EN], [tile_map_cn()]
 #'
 #' @examples
 #' tiles <- cn_tiles()

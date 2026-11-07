@@ -9,7 +9,10 @@ cn_tiles()
 \value{
 A data frame with 35 rows and the columns
   \describe{
-    \item{`short`}{the conventional one-character abbreviation (京).}
+    \item{`short`}{the conventional one-character abbreviation (京), as in
+      [CN_TILE_ORDER].}
+    \item{`en`}{the ISO 3166-2:CN English abbreviation (BJ), as in
+      [CN_TILE_EN].}
     \item{`full`}{the full administrative name (北京市).}
     \item{`row`, `col`}{integer position on the tile grid, row 1 at the top.}
     \item{`inset`}{`TRUE` for the 南海诸岛 tile, which is drawn in grey and
@@ -19,8 +22,9 @@ A data frame with 35 rows and the columns
 }
 \description{
 Returns the grid layout behind [tile_map_cn()]: one row per tile, giving
-the conventional short name, the full administrative name, the grid row and
-column, and whether the row is the 南海诸岛 inset rather than a province.
+the conventional short name, the English abbreviation, the full
+administrative name, the grid row and column, and whether the row is the
+南海诸岛 inset rather than a province.
 }
 \examples{
 tiles <- cn_tiles()
@@ -30,5 +34,5 @@ tiles[tiles$inset, ]
 
 }
 \seealso{
-[CN_TILE_ORDER], [tile_map_cn()]
+[CN_TILE_ORDER], [CN_TILE_EN], [tile_map_cn()]
 }

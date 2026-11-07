@@ -17,12 +17,14 @@ test_that("the tile table has 34 provinces plus the inset", {
   t <- cn_tiles()
   expect_s3_class(t, "data.frame")
   expect_equal(nrow(t), 35)
-  expect_identical(names(t), c("short", "full", "row", "col", "inset"))
+  expect_identical(names(t), c("short", "en", "full", "row", "col", "inset"))
   expect_equal(sum(!t$inset), 34)
   expect_equal(sum(t$inset), 1)
   expect_true(t$inset[35])
   expect_identical(t$short[35], "南海诸岛")
+  expect_identical(t$en[35], "SCS")
   expect_false(anyDuplicated(t$short) > 0)
+  expect_false(anyDuplicated(t$en) > 0)
   expect_type(t$row, "double")
   expect_type(t$col, "double")
 })
@@ -30,6 +32,18 @@ test_that("the tile table has 34 provinces plus the inset", {
 test_that("CN_TILE_ORDER matches the first 34 rows of the layout", {
   expect_length(CN_TILE_ORDER, 34)
   expect_identical(CN_TILE_ORDER, cn_tiles()$short[1:34])
+})
+
+test_that("CN_TILE_EN holds 34 distinct ISO 3166-2:CN codes, in the same order", {
+  expect_length(CN_TILE_EN, 34)
+  expect_identical(CN_TILE_EN, cn_tiles()$en[1:34])
+  expect_true(all(grepl("^[A-Z]{2}$", CN_TILE_EN)))
+  expect_false(anyDuplicated(CN_TILE_EN) > 0)
+  ## anchors, so a silent reshuffle of the vector is caught
+  expect_identical(CN_TILE_EN[CN_TILE_ORDER == "京"], "BJ")
+  expect_identical(CN_TILE_EN[CN_TILE_ORDER == "粤"], "GD")
+  expect_identical(CN_TILE_EN[CN_TILE_ORDER == "藏"], "XZ")
+  expect_identical(CN_TILE_EN[CN_TILE_ORDER == "新"], "XJ")
 })
 
 test_that("unnamed colours must number exactly 34", {
@@ -76,9 +90,17 @@ test_that("the inset takes nz_color, whatever the province colours are", {
   expect_true(all(r$tiles$fill[1:34] == "#123456"))
 })
 
-test_that("name_type selects abbreviations or full names", {
+test_that("name_type selects abbreviations, English codes or full names", {
   expect_identical(draw(fills34())$tiles$lab[1], "京")
   expect_identical(draw(fills34(), name_type = "full")$tiles$lab[1], "北京市")
+  ## the English mode uses the ISO codes and stays pure ASCII throughout
+  en <- draw(fills34(), name_type = "en")$tiles$lab
+  expect_identical(en[1:34], CN_TILE_EN)
+  expect_identical(en[35], "SCS")
+  expect_true(all(grepl("^[A-Z]{2}$", en[1:34])))
+  ## two-letter codes are not shrunk, so an explicit size is kept exactly
+  r <- draw(fills34(), name_type = "en", label_size = 6)
+  expect_equal(unique(r$label_pt[1:34]), 6)
   ## labels = FALSE blanks them without changing the fills
   r <- draw(fills34(), labels = FALSE)
   expect_true(all(r$tiles$lab == ""))

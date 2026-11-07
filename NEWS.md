@@ -9,6 +9,9 @@ First release.
   unnamed vector of 34 values is consumed.
 * Fill colours may be given unnamed (in `CN_TILE_ORDER`) or named by short
   (京) or full (北京市) province name, in any order.
+* `name_type = "en"` labels the tiles with the ISO 3166-2:CN English
+  abbreviations (`CN_TILE_EN`, e.g. `BJ`, `GD`, `XJ`), for figures that should
+  not depend on a CJK font; the 南海诸岛 inset is labelled `"SCS"`.
 * Optional numeric annotations under each label, configurable tile outlines,
   corner rounding, label size, family and colour, and an adjustable
   `南海诸岛` inset.
